@@ -1,5 +1,6 @@
 // Name: Aayan Siddiqui | CMS: 570014
-// Worse time complexity is O(n) for serach 
+// Worst-case time complexity: O(n), where n is the current number of elements (count). 
+// This is because it linearly scans the array to check for duplicate roll numbers.
 #include <iostream>
 #include <stack>
 #include <string> // Added for string support
