@@ -1,0 +1,142 @@
+// Name: Aayan Siddiqui | CMS: 570014
+// Worse time complexity is O(n) for serach 
+#include <iostream>
+#include <stack>
+#include <string> // Added for string support
+
+using namespace std;
+
+struct Student {
+	string name;
+	int roll;
+};
+
+bool addStudent(Student arr[], string n, int roll, int count) {
+	// Check for duplicate roll numbers
+	for (int i = 0; i < count; i++) {
+		if (arr[i].roll == roll) {
+			return false; // Duplicate found
+		}
+	}
+
+	if (count < 5) {
+		arr[count].name = n;
+		arr[count].roll = roll;
+		return true;
+	}
+
+	return false; // Array full
+}
+
+int searchroll(Student arr[], int r, int c) {
+	for (int i = 0; i < c; i++) {
+		if (r == arr[i].roll) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void display(Student arr[], int c) {
+	if (c == 0) {
+		cout << "No students to display.\n";
+		return;
+	}
+	for (int i = 0; i < c; i++) {
+		cout << "Name: " << arr[i].name << " | Roll no: " << arr[i].roll << endl;
+	}
+}
+
+void displayStack(std::stack<int> tempStack) {
+	if (tempStack.empty()) {
+		cout << "Stack is empty.\n";
+		return;
+	}
+	cout << "Stack elements: ";
+	while (!tempStack.empty()) {
+		std::cout << tempStack.top() << " ";
+		tempStack.pop();
+	}
+	std::cout << std::endl;
+}
+
+int main() {
+	stack<int> mys;
+	Student arr[5];
+	int count = 0;
+	bool flag;
+	string nm;
+	int rollno;
+	int search;
+	int val;
+	int choice = 0;
+
+	do {
+		std::cout << "\n--- MENU ---\n";
+		std::cout << "1. Add student\n";
+		cout << "2. Search\n";
+		cout << "3. Display\n";
+		cout << "4. Display stack\n";
+		cout << "5. Clear stack\n";
+		cout << "6. Exit\n";
+		cout << "Enter your choice: ";
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+			cout << "Enter student name: ";
+			cin >> nm;
+			cout << "Enter rollno: ";
+			cin >> rollno;
+
+			flag = addStudent(arr, nm, rollno, count);
+			if (flag) {
+				count++;
+				cout << "Student added successfully!\n";
+			}
+			else {
+				cout << "Error: Either array is full (max 5) or roll number already exists!\n";
+			}
+			break;
+
+		case 2:
+			cout << "Enter rollno to search: ";
+			cin >> search;
+
+			val = searchroll(arr, search, count);
+			if (val == -1) {
+				cout << "Error: Roll number not found.\n";
+			}
+			else {
+				cout << "Found at index: " << val << endl;
+				mys.push(val);
+			}
+			break;
+
+		case 3:
+			display(arr, count);
+			break;
+
+		case 4:
+			displayStack(mys);
+			break;
+
+		case 5:
+			while (!mys.empty()) {
+				mys.pop();
+			}
+			cout << "Stack cleared" << endl;
+			break;
+
+		case 6:
+			cout << "Exiting program" << endl;
+			break;
+
+		default:
+			std::cout << "Invalid choice. Try again." << endl;
+			break;
+		}
+	} while (choice != 6);
+
+	return 0;
+}
